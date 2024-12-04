@@ -1,10 +1,17 @@
 import sys
+import os
+
+cwd = os.getcwd()
 
 flag = ''
 if len(sys.argv) > 1:
   flag = sys.argv[1]
 
 filename = 'test.txt' if (flag.lower() == '-t' or flag.lower() == '--test') else 'input.txt'
+
+dir = '01-Historian_Hysteria'
+if not cwd.endswith(dir):
+  filename = '/'.join([dir, filename])
 
 with open(filename, 'r') as file:
   content = list(map(lambda line: list(map(int, line.strip().split('   '))), file.readlines()))
