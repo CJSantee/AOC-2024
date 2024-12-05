@@ -10,7 +10,12 @@ def get_input_filename():
   directory, file = sys.argv[0].split('/')[-2:]
 
   # Get the main input or test input if -t/--test flag is used
-  filename = 'test.txt' if (flag.lower() == '-t' or flag.lower() == '--test') else 'input.txt'
+  if flag.lower() in ['-t', '--test']:
+    filename = 'test.txt'
+  elif flag.lower() in ['-f', '--file'] and len(sys.argv) > 2:
+    filename = sys.argv[2]
+  else:
+    filename = 'input.txt'
 
   filename = '/'.join([directory, filename])
 

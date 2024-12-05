@@ -9,15 +9,27 @@ if [ -z "$directories" ]; then
 fi
 
 # Use fzf to let the user select a folder
-selection=$(printf "%s\n" "$directories" | fzf --height 10 --reverse --border --prompt="Select a day: ")
+day_selection=$(printf "%s\n" "$directories" | fzf --height 10 --reverse --border --prompt="Select a day: ")
 
 # Handle the user's choice
-if [ -z "$selection" ]; then
+if [ -z "$day_selection" ]; then
   echo "No day selected. Exiting..."
   exit 1
 else
-  echo "Running script for day $selection"
-  directory=$(echo "$selection" | sed 's/: /-/g; s/ /_/g')
+  directory=$(echo "$day_selection" | sed 's/: /-/g; s/ /_/g')
   script=$(echo "$directory" | sed 's/^[^-]*-//; s/_//g')
-  python3 -m "$directory.$script"
+fi
+
+input_files=$(find "./$directory" -maxdepth 1 -type f -name "*.txt" | sed 's:.*/::')
+
+# Use fzf to let the user select an input file
+file_selection=$(printf "%s\n" "$input_files" | fzf --height 10 --reverse --border --prompt="Select an input file: ")
+
+# Use the file selection to run the python script
+if [ -z "$file_selection" ]; then
+  echo "No input file selected. Exiting..."
+  exit 1
+else 
+  echo "Running script for day $day_selection with input from $file_selection:"
+  python3 -m "$directory.$script" -f $file_selection
 fi
