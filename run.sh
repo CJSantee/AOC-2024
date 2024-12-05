@@ -1,6 +1,6 @@
 #!/bin/sh
 # Get a list of directories in the current working directory, excluding . and .git
-directories=$(find . -maxdepth 1 -type d ! -name "." ! -name ".git" | sed 's|^\./||; s/-/: /g; s/_/ /g')
+directories=$(find . -maxdepth 1 -type d ! -name "." ! -name ".git" ! -name "utils" | sed 's|^\./||; s/-/: /g; s/_/ /g')
 
 # Check if there are any directories
 if [ -z "$directories" ]; then
@@ -18,7 +18,6 @@ if [ -z "$selection" ]; then
 else
   echo "Running script for day $selection"
   directory=$(echo "$selection" | sed 's/: /-/g; s/ /_/g')
-  cd "./$directory"
   script=$(echo "$directory" | sed 's/^[^-]*-//; s/_//g')
-  python3 "$script.py"
+  python3 -m "$directory.$script"
 fi
