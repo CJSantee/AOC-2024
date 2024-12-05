@@ -20,3 +20,11 @@ def get_input_filename():
   filename = '/'.join([directory, filename])
 
   return filename
+
+def get_part():
+  part = 'both'
+  for index in range(len(sys.argv)):
+    arg = sys.argv[index]
+    if arg.lower() in ['-p', '--part'] and len(sys.argv) > index + 1:
+      part = sys.argv[index + 1]
+  return part

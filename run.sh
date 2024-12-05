@@ -1,6 +1,6 @@
 #!/bin/sh
 # Get a list of directories in the current working directory, excluding . and .git
-directories=$(find . -maxdepth 1 -type d ! -name "." ! -name ".git" ! -name "utils" | sed 's|^\./||; s/-/: /g; s/_/ /g')
+directories=$(find . -maxdepth 1 -type d ! -name "." ! -name ".git" ! -name "utils" | sed 's|^\./||; s/-/: /1; s/_/ /g')
 
 # Check if there are any directories
 if [ -z "$directories" ]; then

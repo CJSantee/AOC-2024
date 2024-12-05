@@ -2,18 +2,21 @@
 ## What is Advent of Code?
 [Advent of Code](https://adventofcode.com/2024/about) is an Advent calendar of small programming puzzles for a variety of skill levels that can be solved in any programming language you like.
 
-## Run Script
-### Dependencies
-#### [fzf](https://github.com/junegunn/fzf)
-Install:
+## Running Programs
+### Running individual program:
+Run the following command with the `-t` flag to provide the test.txt file as input, run without any flag to provide the input.txt file as input, and run with the -f flag to specify a different file to provide as input.
 ```bash
-brew install fzf
+python3 -m <directory>.<python_module> [-t | -f <input_filename>]
 ```
 
-### Running
+### Running with the run script:
 Add run permissions to bash script:
 ```bash
 chmod u+x run.sh
+```
+Install [fzf](https://github.com/junegunn/fzf):
+```bash
+brew install fzf
 ```
 Run script:
 ```bash
