@@ -51,15 +51,21 @@ def count_xmas(point: tuple[int, int]):
 
 # Check if point is the A in an X-MAS
 def is_x_mas(point: tuple[int, int]):
-    count = 0
     origin_row, origin_col = point
-
-    # Check North-West
-    row = origin_row + NORTH_WEST[0]
-    col = origin_col + NORTH_WEST[1]
-    test_char = graph[row][col]
-
-    return count
+    diagonals: list[tuple[tuple[int, int]]] = [(NORTH_WEST, SOUTH_EAST), (NORTH_EAST, SOUTH_WEST)]
+    for diagonal in diagonals:
+        chars = ['M', 'S']
+        for direction in diagonal:
+            row_offset, col_offset = direction
+            row = origin_row + row_offset
+            col = origin_col + col_offset
+            if not on_graph((row, col)):
+                return False
+            test_char = graph[row][col]
+            if not test_char in chars:
+                return False
+            chars.remove(test_char)
+    return True
 
 def part_one():
     count = 0
@@ -75,8 +81,8 @@ def part_two():
     for row in range(len(graph)):
         for col in range(len(graph[0])):
             test_char = graph[row][col]
-            if test_char == 'A':
-                count += count_x_mas((row, col))
+            if test_char == 'A' and is_x_mas((row, col)):
+                count += 1
     return count
 
 if part.lower() in ['one', 'both']:
